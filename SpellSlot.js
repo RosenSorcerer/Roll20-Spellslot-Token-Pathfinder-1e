@@ -37,30 +37,9 @@ var maxSpellLevel = 9;
       // Find max spell level to determine number of tokens to place and fields to fill using else if statements starting at level 9.
       // spellCount will be an array of [x,y] where x is number of tokens to be generated, and y is number of fields to be filled in the last token.
 
-      // if (getAttrByName(character, 'caster1_spells_perday_level_9') > 0) {
-      //   spellCount = [3, 3];
-      // } else if (getAttrByName(character, 'caster1_spells_perday_level_8') > 0) {
-      //   spellCount = [3, 2];
-      // } else if (getAttrByName(character, 'caster1_spells_perday_level_7') > 0) {
-      //   spellCount = [3, 1];
-      // } else if (getAttrByName(character, 'caster1_spells_perday_level_6') > 0) {
-      //   spellCount = [2, 3];
-      // } else if (getAttrByName(character, 'caster1_spells_perday_level_5') > 0) {
-      //   spellCount = [2, 2];
-      // } else if (getAttrByName(character, 'caster1_spells_perday_level_4') > 0) {
-      //   spellCount = [2, 1];
-      // } else if (getAttrByName(character, 'caster1_spells_perday_level_3') > 0) {
-      //   spellCount = [1, 3];
-      // } else if (getAttrByName(character, 'caster1_spells_perday_level_2') > 0) {
-      //   spellCount = [1, 2];
-      // } else if (getAttrByName(character, 'caster1_spells_perday_level_1') > 0) {
-      //   spellCount = [1, 1];
-      // }
-
       for (let j = maxSpellLevel; j > 0; j--) {
-        log(j);
         if (getAttrByName(character, spellSlotName + j) > 0) {
-          spellcount = [(
+          spellCount = [(
             Math.ceil(j/3)
           ),
           (
@@ -71,14 +50,11 @@ var maxSpellLevel = 9;
         }
       }
 
-
+      //Loop creates each of the tokens for to be displayed
       for (let i = 1; i <= spellCount[0]; i++) {
         var currentScale = 3*(i-1)
-      //   if (i < spellCount[0]) {
-
-      //   }
-      var barStats = [0, 0, 0];
-      log(spellCount);
+        var barStats = [0, 0, 0];
+        /**** The Follow Section serves to identify appropriate name of the token being created ****/
         if (i !== spellCount[0]) {
           tokenName = ((i == 1) ? '1st through 3rd Level' : '4th through 6th Level');
           for (var j = 1; j <= 3; j++) {
@@ -89,14 +65,13 @@ var maxSpellLevel = 9;
           }
 
         } else {
-          //spellToken.name = ((i == 1) ? '1st through 3rd Level' : ((i == 2) ? '4th through 6th Level' : '7th through 9th Level');
 
           for (var j = 1; j <= spellCount[1]; j++) {
             var spellLevel = j + currentScale;
             var spellLevelString = spellSlotName + spellLevel;
             var totalSpellsForLvl = getAttrByName(character, spellLevelString);
             barStats[j-1] = totalSpellsForLvl;
-        }
+          }
 
           if (i == 1) {
             var tokenName = ((spellCount[1] == 1) ? '1st Level' : ((spellCount[1] == 2) ? '1st & 2nd Level' : '1st through 3rd Level'));
@@ -106,6 +81,9 @@ var maxSpellLevel = 9;
             var tokenName = ((spellCount[1] == 1) ? '7th Level' : ((spellCount[1] == 2) ? '7th & 8th Level' : '7th through 9th Level'));
           }
         }
+        /**** End of section ****/
+
+        //Create token with all of the data
         var spellToken = createObj('graphic', {
           pageid: Campaign().get("playerpageid"),
           layer: 'objects',
