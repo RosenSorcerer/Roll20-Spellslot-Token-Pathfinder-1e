@@ -20,6 +20,7 @@ var maxSpellLevel = 9;
         //open your image library to the desired image, use the developer console to locate it.
         //(F12 on PC, Option + Command + J for Mac) -- TODO Probably remove this line, I do not think it is relevant
       var tokenImg = 'https://s3.amazonaws.com/files.d20.io/images/277497733/MyFvZXzbf5-WAXhnFiZolQ/thumb.png?1648312676';
+
       //Iterate over message to compile full character name regardless of whitespace in name
       for (var i = 1; i < msgSplit.length; i++) {
         if (i > 1) {
@@ -30,6 +31,7 @@ var maxSpellLevel = 9;
 
       //Get ID of matching character sheet.
       var character = findObjs({type: 'character', name: characterName})[0].id;
+
       var spellCount = [0, 0];
 
       // Find max spell level to determine number of tokens to place and fields to fill using else if statements starting at level 9.
@@ -54,17 +56,18 @@ var maxSpellLevel = 9;
       // } else if (getAttrByName(character, 'caster1_spells_perday_level_1') > 0) {
       //   spellCount = [1, 1];
       // }
-      console.log('ping')
-      for (let j = maxSpellLevel; j > 0 && spellCount === [0, 0]; j--) {
-        console.log(j);
+
+      for (let j = maxSpellLevel; j > 0; j--) {
+        log(j);
         if (getAttrByName(character, spellSlotName + j) > 0) {
           spellcount = [(
-            Math.ceiling(j/3)
+            Math.ceil(j/3)
           ),
           (
             ((j%3) !== 0) ? (j%3) : (3)
           )
           ]
+          break
         }
       }
 
