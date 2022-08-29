@@ -89,13 +89,11 @@ var maxSpellLevel = 9;
           layer: 'objects',
           height: 70,
           width: 70,
-          left: 70*i,
-          top: 140,
+          left: 70*i+35,
+          top: 70*i+35,
           name: tokenName,
           imgsrc: tokenImg,
           controlledby: playerID,
-          aura1_radius: 0.5,
-          aura1_color: ((i == 1) ? '#ff0000' : ((i == 2) ? '#0000ff' : '#bb00ff')),
           has_bright_light_vision: true,
           has_night_vision: true,
           night_vision_distance: 0.5,
@@ -105,6 +103,7 @@ var maxSpellLevel = 9;
           bar2_max: barStats[1],
           bar3_value: barStats[2],
           bar3_max: barStats[2],
+          bar_location: 'overlap_bottom',
           showname: true
         })
       }
